@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#072E22">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" type="image/png" href="icon-512.png">
+<link rel="apple-touch-icon" href="icon-512.png">
+<title>Warisan Ilmu - Deka Sonjaya</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:#FBF6E8;color:#182A22;overflow-x:hidden}
+button{font-family:inherit;border:none;background:none;cursor:pointer}
+#splash{position:fixed;inset:0;z-index:100;background:linear-gradient(180deg,#0E4A37 0%,#072E22 52%,#02120C 100%);color:#fff;display:flex;align-items:center;justify-content:center;text-align:center;padding:18px 20px;transition:opacity .45s,visibility .45s;overflow:hidden}
+#splash.hide{opacity:0;visibility:hidden;pointer-events:none}
+#splash:before{content:'';position:absolute;top:-58px;left:-72px;width:230px;height:230px;background:linear-gradient(135deg,#FFF6C9,#E8D48A 38%,#C9A227 62%,#8A6D0A);border-radius:0 0 110px 16px;transform:rotate(26deg);box-shadow:14px 14px 34px rgba(0,0,0,.35)}
+#splash:after{content:'';position:absolute;bottom:-40px;right:-40px;width:150px;height:150px;background:radial-gradient(circle,rgba(232,212,138,.22),transparent 70%)}
+.frame{position:absolute;inset:11px;border:1px solid rgba(232,212,138,.55);border-radius:16px;pointer-events:none;z-index:3}
+.frame:before{content:'';position:absolute;inset:5px;border:1px solid rgba(232,212,138,.22);border-radius:11px}
+.frame i{position:absolute;width:18px;height:18px}
+.frame i:nth-child(1){top:4px;left:4px;border-top:1.5px solid #E8D48A;border-left:1.5px solid #E8D48A}
+.frame i:nth-child(2){top:4px;right:4px;border-top:1.5px solid #E8D48A;border-right:1.5px solid #E8D48A}
+.frame i:nth-child(3){bottom:4px;left:4px;border-bottom:1.5px solid #E8D48A;border-left:1.5px solid #E8D48A}
+.frame i:nth-child(4){bottom:4px;right:4px;border-bottom:1.5px solid #E8D48A;border-right:1.5px solid #E8D48A}
+.splash-in{position:relative;z-index:4;width:100%;max-width:340px;display:flex;flex-direction:column;align-items:center}
+.splash-top{font-size:9px;letter-spacing:.32em;color:#E8D48A;font-weight:700}
+.splash-line{width:44px;height:1px;background:#E8D48A;margin:10px 0 0;opacity:.8}
+.medali{width:132px;height:132px;margin-top:14px;display:grid;place-items:center;position:relative;flex-shrink:0}
+.medali:before{content:'';position:absolute;inset:0;border-radius:50%;background:conic-gradient(from 20deg,#FFF6C9,#C9A227,#E8D48A,#8A6D0A,#FFF6C9);box-shadow:0 14px 28px rgba(0,0,0,.5),0 0 40px rgba(232,212,138,.3)}
+.medali:after{content:'';position:absolute;inset:7px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#FFF6C9,#E8D48A 52%,#C9A227);border:1px solid #FFF6C9}
+.medali-in{position:relative;z-index:2;width:102px;height:102px;border-radius:50%;overflow:hidden;background:#000;display:grid;place-items:center;border:2px solid #FFF6C9;box-shadow:0 6px 14px rgba(0,0,0,.3)}
+.medali-in img{width:100%;height:100%;object-fit:cover}
+.medali-fb{width:100%;height:100%;display:none;flex-direction:column;align-items:center;justify-content:center;color:#072E22;background:radial-gradient(circle,#FFF6C9,#E8D48A)}
+.medali-fb span{font-size:32px}
+.medali-fb b{font-family:'Cinzel',serif;font-size:8px;letter-spacing:.18em;margin-top:3px}
+.splash h1{font-family:'Cinzel',serif;font-weight:700;font-size:38px;line-height:1.02;margin-top:16px;letter-spacing:.03em;background:linear-gradient(180deg,#FFFFFF,#FFF6C9 35%,#E8D48A 60%,#C9A227);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.splash h2{font-family:'Cormorant Garamond',serif;font-size:17px;margin-top:6px;color:#FFF6C9;line-height:1.3;font-weight:600}
+.divider{display:flex;align-items:center;gap:8px;margin:12px 0 8px;width:100%;justify-content:center}
+.divider i{display:block;height:1px;width:52px;background:linear-gradient(90deg,transparent,#E8D48A)}
+.divider i:last-child{background:linear-gradient(90deg,#E8D48A,transparent)}
+.divider b{font-size:8.5px;letter-spacing:.16em;color:#E8D48A;font-weight:800;white-space:nowrap}
+.tagline{font-size:11.5px;line-height:1.6;opacity:.9}
+.btn-masuk{margin-top:14px;width:100%;max-width:268px;background:linear-gradient(180deg,#FFF6C9,#E8D48A 55%,#C9A227);color:#072E22;padding:12px;border-radius:11px;font-weight:800;font-size:15px;box-shadow:0 10px 20px rgba(0,0,0,.35),inset 0 1px 0 #fff;border:1px solid #FFF6C9}
+.hint{margin-top:8px;font-size:10px;opacity:.6}
+.box3{margin-top:12px;width:100%;border:1px solid rgba(232,212,138,.5);background:rgba(255,255,255,.06);border-radius:12px;padding:10px 6px;display:grid;grid-template-columns:1fr 1fr 1fr}
+.box3 div{font-size:10px;line-height:1.4;color:#FFF6C9;font-weight:600}
+.box3 div span{font-size:17px;display:block;margin-bottom:3px}
+.box3 div:nth-child(2){border-left:1px solid rgba(232,212,138,.3);border-right:1px solid rgba(232,212,138,.3)}
+.foot{margin-top:10px;font-size:9px;opacity:.6;letter-spacing:.08em;line-height:1.6}
+.foot b{color:#FFF6C9;letter-spacing:.16em}
+#app{display:none}
+#app.show{display:block}
+.top{position:sticky;top:0;z-index:20;background:linear-gradient(160deg,#02120C,#072E22 45%,#0B3D2E);color:#fff;padding:14px 16px 16px;border-radius:0 0 24px 24px;box-shadow:0 8px 22px rgba(3,22,15,.32);overflow:hidden}
+.top:before{content:'';position:absolute;top:-30px;right:-30px;width:120px;height:120px;background:radial-gradient(circle,rgba(232,212,138,.25),transparent 70%)}
+.top:after{content:'';position:absolute;left:16px;right:16px;bottom:0;height:1px;background:linear-gradient(90deg,transparent,rgba(232,212,138,.6),transparent)}
+.top-in{position:relative;z-index:1}
+.logo-row{display:flex;align-items:center;gap:10px}
+.logo-mini{width:40px;height:40px;border-radius:50%;object-fit:cover;border:1.5px solid #E8D48A;background:#000;box-shadow:0 0 0 2px rgba(232,212,138,.18)}
+.brand h1{font-family:'Cinzel',serif;font-size:19px;letter-spacing:.03em;line-height:1}
+.brand h1 span{background:linear-gradient(180deg,#FFF6C9,#E8D48A,#C9A227);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.brand p{font-size:9px;opacity:.8;margin-top:3px;letter-spacing:.1em;font-weight:600}
+.brand-badge{margin-left:auto;background:rgba(255,246,201,.1);border:1px solid rgba(232,212,138,.4);padding:5px 8px;border-radius:999px;font-size:9px;font-weight:800;letter-spacing:.08em;color:#FFF6C9;flex-shrink:0;white-space:nowrap}
+.hero{margin-top:13px;background:linear-gradient(135deg,rgba(255,246,201,.14),rgba(255,255,255,.05));border:1px solid rgba(232,212,138,.42);border-radius:16px;padding:12px 13px;display:flex;gap:12px;align-items:center;box-shadow:inset 0 1px 0 rgba(255,255,255,.14)}
+.hero small{font-size:8.5px;letter-spacing:.18em;color:#E8D48A;font-weight:800}
+.hero h2{font-family:'Cormorant Garamond',serif;font-size:19px;line-height:1.18;margin:5px 0 4px;font-weight:600}
+.hero h2 i{font-style:normal;background:linear-gradient(180deg,#FFF6C9,#E8D48A);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero p{font-size:11.5px;line-height:1.55;opacity:.85}
+.hero-book{width:46px;height:60px;background:linear-gradient(180deg,#FFFFFF,#F5E6A0);border-radius:5px 9px 9px 5px;color:#072E22;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;font-family:'Cinzel',serif;font-size:8px;line-height:1.25;border-left:2.5px solid #C9A227;flex-shrink:0;box-shadow:0 8px 14px rgba(0,0,0,.28)}
+.hero-book b{font-size:11px;color:#C9A227;line-height:1}
+.wrap{padding:16px 15px 30px}
+.search{display:flex;gap:8px;background:#fff;border:1px solid #E9DFC2;border-radius:999px;padding:5px 5px 5px 13px;align-items:center}
+.search input{flex:1;border:none;outline:none;font-size:13.5px;font-family:inherit;background:transparent;min-width:0}
+.search button{background:#072E22;color:#fff;padding:9px 14px;border-radius:999px;font-weight:700;font-size:13px}
+.stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:9px;margin:13px 0}
+.stat{background:#fff;border:1px solid #EFE6C8;border-radius:14px;padding:11px 6px;text-align:center}
+.stat b{font-size:19px;color:#072E22}
+.stat span{display:block;font-size:10.5px;color:#6B7D74;margin-top:1px}
+.sec{display:flex;justify-content:space-between;align-items:flex-end;margin:17px 0 11px}
+.sec h3{font-family:'Cormorant Garamond',serif;font-size:21px;font-weight:600;color:#072E22;line-height:1}
+.sec p{font-size:10px;color:#9A7B14;font-weight:700;letter-spacing:.06em}
+.chips{display:flex;gap:7px;overflow:auto;padding-bottom:5px;scrollbar-width:none}
+.chip{white-space:nowrap;padding:8px 13px;border-radius:999px;background:#fff;border:1px solid #E9DFC2;font-size:12.5px;font-weight:600;flex-shrink:0}
+.chip.active{background:#072E22;color:#fff;border-color:#072E22}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.card{background:#fff;border:1px solid #EFE6C8;border-radius:18px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 8px 18px rgba(7,46,34,.06)}
+.cover{height:164px;padding:12px;display:flex;flex-direction:column;justify-content:space-between;color:#fff;position:relative}
+.cover:after{content:'';position:absolute;inset:0;border:1px solid rgba(255,246,201,.25);margin:7px;pointer-events:none}
+.cover-top{display:flex;justify-content:space-between;align-items:center;position:relative;z-index:1}
+.badge{font-size:8.5px;background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.28);padding:5px 7px;border-radius:999px;font-weight:800}
+.cover-mid{text-align:center;position:relative;z-index:1}
+.cover-mid h4{font-family:'Cinzel',serif;font-size:14px;line-height:1.25;margin:6px 0 4px}
+.cover-mid p{font-size:8.5px;opacity:.85;letter-spacing:.14em}
+.cover-bot{display:flex;justify-content:space-between;font-size:9.5px;position:relative;z-index:1}
+.card-body{padding:12px;display:flex;flex-direction:column;flex:1}
+.card-body h5{font-size:13.5px;line-height:1.35;min-height:36px;font-weight:700}
+.card-body p{font-size:11px;color:#6B7D74;line-height:1.55;margin:5px 0 10px;flex:1}
+.btn-row{display:flex;gap:7px}
+.btn{flex:1;padding:9px 5px;border-radius:10px;font-size:12.5px;font-weight:700;white-space:nowrap}
+.btn-p{background:linear-gradient(180deg,#FFF6C9,#E8D48A 55%,#C9A227);color:#072E22;border:1px solid #E8D48A}
+.btn-g{background:#FBF6E8;border:1px solid #E9DFC2;color:#072E22}
+.continue{background:linear-gradient(135deg,#072E22,#0B3D2E);color:#fff;border-radius:16px;padding:13px;display:flex;gap:11px;align-items:center;margin-top:15px;border:1px solid rgba(232,212,138,.5)}
+.quote{background:#fff;border:1px solid #EFE6C8;border-radius:16px;padding:16px;text-align:center;margin-top:15px}
+.quote p{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:17px;line-height:1.55;color:#072E22}
+.list{display:flex;flex-direction:column;gap:9px}
+.list-item{background:#fff;border:1px solid #EFE6C8;border-radius:14px;padding:11px;display:flex;gap:11px;align-items:center}
+.list-item .thumb{width:44px;height:56px;border-radius:9px;display:grid;place-items:center;font-size:17px;color:#fff;flex-shrink:0}
+.list-item h4{font-size:13.5px;font-weight:700}
+.list-item p{font-size:11.5px;color:#6B7D74;margin-top:2px;line-height:1.5}
+.footer-app{text-align:center;padding:10px 0 4px;font-size:10.5px;color:#8A9A92;line-height:1.65}
+.footer-app b{color:#072E22;letter-spacing:.12em}
+.toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%);background:#072E22;color:#fff;padding:10px 15px;border-radius:999px;font-size:12.5px;z-index:99;display:none;white-space:nowrap}
+</style>
+</head>
+<body>
+<div id="splash" onclick="tapSplash()">
+<div class="frame"><i></i><i></i><i></i><i></i></div>
+<div class="splash-in">
+<div class="splash-top">BISMILLAHIRRAHMANIRRAHIM</div>
+<div class="splash-line"></div>
+<div class="medali"><div class="medali-in"><img src="logo.png" alt="Logo" onerror="this.style.display='none';document.getElementById('fb').style.display='flex'"><div class="medali-fb" id="fb"><span>📖</span><b>WARISAN ILMU</b></div></div></div>
+<h1>WARISAN<br>ILMU</h1>
+<h2>Perpustakaan Digital Kajian<br>Deka Sonjaya</h2>
+<div class="divider"><i></i><b>TERKURASI &nbsp;•&nbsp; TERSTRUKTUR &nbsp;•&nbsp; TERPERCAYA</b><i></i></div>
+<p class="tagline">Kumpulan 14 kajian terpilih dalam satu perpustakaan digital.<br>Disusun sistematis untuk pembelajaran yang terarah.</p>
+<button class="btn-masuk" id="btnMasuk">Masuk Perpustakaan &nbsp;→</button>
+<div class="hint" id="hint">Sentuh untuk masuk perpustakaan</div>
+<div class="box3"><div><span>📚</span>Kajian<br>Terkurasi</div><div><span>🧠</span>Refleksi<br>Mendalam</div><div><span>🌙</span>Amal &<br>Penghayatan</div></div>
+<div class="foot"><b>DEKA SONJAYA</b><br>warisanilmu.id</div>
+</div>
+</div>
+<div id="app">
+<header class="top"><div class="top-in">
+<div class="logo-row"><img src="logo.png" class="logo-mini" onerror="this.src='icon-512.png'"><div class="brand"><h1>WARISAN <span>ILMU</span></h1><p>PERPUSTAKAAN DIGITAL • DEKA SONJAYA</p></div><div class="brand-badge">14 KAJIAN</div></div>
+<div class="hero"><div style="flex:1;min-width:0"><small>PERPUSTAKAAN DIGITAL KAJIAN</small><h2>Koleksi Kajian Lengkap<br>Dalam <i>Satu Tempat</i></h2><p>14 naskah kajian, terkurasi dan tersusun rapi.<br>Siap dipelajari kapan pun.</p></div><div class="hero-book"><b>★</b>KITAB<br>SATU</div></div>
+</div></header>
+<div class="wrap">
+<div class="search"><span>🔍</span><input id="searchInput" placeholder="Cari judul atau tema kajian..." oninput="renderBooks()"><button onclick="renderBooks()">Cari</button></div>
+<div class="stats"><div class="stat"><b>14</b><span>Naskah Kajian</span></div><div class="stat"><b>100%</b><span>Akses Gratis</span></div><div class="stat"><b>24/7</b><span>Tersedia</span></div></div>
+<div class="continue">
+<div style="width:50px;height:64px;background:linear-gradient(180deg,#FFF6C9,#E8D48A);border-radius:6px 9px 9px 6px;display:grid;place-items:center;color:#072E22;font-weight:800;text-align:center;font-size:10px;flex-shrink:0;border-left:2.5px solid #C9A227">KITAB<br>SATU</div>
+<div style="flex:1;min-width:0"><b>Rekomendasi Awal</b><p style="font-size:11.5px;opacity:.8;margin:3px 0">Kitab Satu • Fondasi Pengenalan Diri</p><p style="font-size:10.5px;opacity:.7">Disarankan untuk pembaca baru</p></div>
+<button onclick="openBook('kitab1')" style="background:#E8D48A;color:#072E22;padding:9px 11px;border-radius:999px;font-weight:800;font-size:11.5px;flex-shrink:0">Buka →</button>
+</div>
+<div class="sec"><div><h3>Koleksi Kajian</h3></div><p>14 NASKAH</p></div>
+<div class="chips">
+<button class="chip active" onclick="setCat(this,'Semua')">Semua</button>
+<button class="chip" onclick="setCat(this,'Kitab')">Kitab</button>
+<button class="chip" onclick="setCat(this,'Hakekat')">Hakekat</button>
+<button class="chip" onclick="setCat(this,'Al-Quran')">Al-Quran</button>
+<button class="chip" onclick="setCat(this,'Rezeki')">Rezeki</button>
+<button class="chip" onclick="setCat(this,'Refleksi')">Refleksi</button>
+<button class="chip" onclick="setCat(this,'ESQ')">ESQ</button>
+<button class="chip" onclick="setCat(this,'Sholat')">Sholat</button>
+<button class="chip" onclick="setCat(this,'Ketenangan')">Ketenangan</button>
+<button class="chip" onclick="setCat(this,'Qolbu')">Qolbu</button>
+</div>
+<br>
+<div class="grid" id="bookGrid"></div>
+<div class="quote"><p>"Ilmu yang didokumentasikan adalah warisan. Ilmu yang diamalkan adalah cahaya."</p><br><span style="font-size:10.5px;letter-spacing:.14em;color:#9A7B14;font-weight:800">— DEKA SONJAYA</span></div>
+<div class="sec"><div><h3>Alur Pembelajaran</h3></div></div>
+<div class="list">
+<div class="list-item" onclick="openBook('kitab1')"><div class="thumb" style="background:#072E22">01</div><div><h4>Tahap 1 — Kitab Satu</h4><p>Fondasi pengenalan diri bagi pembaca baru</p></div></div>
+<div class="list-item" onclick="openBook('kitab2')"><div class="thumb" style="background:#1A5D44">02</div><div><h4>Tahap 2 — Kitab Dua</h4><p>Pendalaman dan pembersihan lapisan hati</p></div></div>
+<div class="list-item" onclick="openBook('alhamdu')"><div class="thumb" style="background:#C9A227">ٱ</div><div><h4>Tahap 3 — Hakekat Alhamdu</h4><p>Memahami makna segala puji hanya bagi Allah</p></div></div>
+<div class="list-item" onclick="openBook('qolbu')"><div class="thumb" style="background:#8A2A4A">♥</div><div><h4>Tahap 4 — Cermin Qolbu</h4><p>Refleksi dan penjernihan isi hati</p></div></div>
+<div class="list-item" onclick="openBook('tenang')"><div class="thumb" style="background:#2A5A8A">☁</div><div><h4>Tahap 5 — Pintu Ketenangan</h4><p>Mengelola kegelisahan menuju ketenangan batin</p></div></div>
+</div>
+<div style="background:linear-gradient(135deg,#072E22,#0B3D2E);color:#fff;border-radius:16px;padding:16px;margin-top:16px;text-align:center;border:1px solid rgba(232,212,138,.5)">
+<div style="font-size:20px">🌙</div>
+<h3 style="font-family:'Cormorant Garamond',serif;font-size:20px;margin:6px 0">Kajian Rutin</h3>
+<p style="font-size:12px;opacity:.85;line-height:1.55">Mengenal Hakekat Melalui Perumpamaan Alam.<br>Setiap Jumat, 20.00 WIB</p>
+<button onclick="shareAll()" style="background:linear-gradient(180deg,#FFF6C9,#E8D48A);color:#072E22;padding:10px 17px;border-radius:999px;font-weight:800;margin-top:11px;font-size:13px">Bagikan Perpustakaan →</button>
+</div>
+<div class="footer-app"><b>WARISAN ILMU</b><br>Perpustakaan Digital Kajian Deka Sonjaya<br>warisanilmu.id</div>
+</div>
+</div>
+</div>
+<div class="toast" id="toast"></div>
+<script>
+let tahap = 0;
+function tapSplash(){
+  if(tahap === 0){
+    tahap = 1;
+    document.getElementById('btnMasuk').textContent = 'Sentuh Sekali Lagi Untuk Masuk →';
+    document.getElementById('hint').textContent = 'Sentuh sekali lagi untuk masuk.';
+    return;
+  }
+  if(tahap === 1){
+    tahap = 2;
+    document.getElementById('splash').classList.add('hide');
+    document.getElementById('app').classList.add('show');
+    window.scrollTo(0,0);renderBooks();
+  }
+}
+const books=[
+{id:'kitab1',title:'Kajian Kitab Satu',cat:'Kitab',desc:'Fondasi pengenalan diri: Ruh, Qolbu, Nafsu, Akal, dan Jasad. Disampaikan dengan bahasa yang jernih dan perumpamaan alam.',cover:'linear-gradient(135deg,#072E22,#0E5A43)',icon:'١',link:'https://nagapersada.github.io/Kajian-KItab-Satu/'},
+{id:'kitab2',title:'Kajian Kitab Dua',cat:'Kitab',desc:'Kelanjutan pendalaman diri. Menjernihkan lapisan hati yang masih tertutup.',cover:'linear-gradient(135deg,#1A5D44,#072E22)',icon:'٢',link:'https://nagapersada.github.io/Kajian-Kitab-Dua/'},
+{id:'kitab3',title:'Kajian Kitab Tiga',cat:'Kitab',desc:'Pembahasan lanjutan mengenai perjalanan ruh dan jalan pulang.',cover:'linear-gradient(135deg,#0E4D3A,#041A12)',icon:'٣',link:'https://nagapersada.github.io/Kajian-Kitab-Tiga/'},
+{id:'kitab4',title:'Kajian Kitab Empat',cat:'Kitab',desc:'Penyempurnaan pemahaman syariat, tarekat, hakekat, dan ma\'rifat.',cover:'linear-gradient(135deg,#2A6A4A,#072E22)',icon:'٤',link:'https://nagapersada.github.io/Kajian-Kitab-Empat/'},
+{id:'kitab5',title:'Kajian Kitab Lima',cat:'Kitab',desc:'Penutup rangkaian Kitab. Mengintegrasikan pemahaman menjadi amal.',cover:'linear-gradient(135deg,#072E22,#134E3B)',icon:'٥',link:'https://nagapersada.github.io/Kajian-Kitab-Lima/'},
+{id:'alhamdu',title:'Kajian Hakekat Alhamdu',cat:'Hakekat',desc:'Memahami hakekat segala puji hanya bagi Allah, dari lisan hingga hati.',cover:'linear-gradient(135deg,#C9A227,#8A6D0A)',icon:'ٱلْحَمْدُ',link:'https://nagapersada.github.io/kajian-Hakekat-Alhamdu/'},
+{id:'qadim',title:'Kajian Al-Quran Qadim',cat:'Al-Quran',desc:'Mengenal Al-Quran yang Qadim. Bukan sekadar huruf, melainkan cahaya yang hidup.',cover:'linear-gradient(135deg,#1E6A52,#072E22)',icon:'📖',link:'https://nagapersada.github.io/Kajian-AlQuran-Qadim/'},
+{id:'hakekat',title:'Mengenal Hakekat',cat:'Hakekat',desc:'Pintu awal mengenal hakekat diri dan hakekat segala sesuatu.',cover:'linear-gradient(135deg,#B89A2E,#072E22)',icon:'🌙',link:'https://nagapersada.github.io/Mengenal-Hakekat/'},
+{id:'rezeki',title:'9 Hukum Rezeki',cat:'Rezeki',desc:'Sembilan prinsip rezeki yang sering terabaikan. Rezeki bukan hanya materi, tetapi juga ketenangan dan jalan keluar.',cover:'linear-gradient(135deg,#8A6D0A,#C9A227)',icon:'💰',link:'https://nagapersada.github.io/9-Hukum-Rezeki/'},
+{id:'literasi',title:'Literasi Refleksi',cat:'Refleksi',desc:'Melatih kemampuan membaca diri melalui tulisan dan refleksi terstruktur.',cover:'linear-gradient(135deg,#3A4A5A,#182A22)',icon:'✍️',link:'https://nagapersada.github.io/Literasi-Refleksi/'},
+{id:'esq',title:'ESQWay',cat:'ESQ',desc:'Pendekatan ESQ. Memadukan kecerdasan emosional, spiritual, dan amal dalam kehidupan sehari-hari.',cover:'linear-gradient(135deg,#1A5D44,#C9A227)',icon:'🧭',link:'https://nagapersada.github.io/ESQWay/'},
+{id:'sholat',title:'Karakter Sholat',cat:'Sholat',desc:'Sholat sebagai pembentuk karakter: disiplin, ketenangan, dan kejujuran.',cover:'linear-gradient(135deg,#0E4D3A,#072E22)',icon:'🕌',link:'https://nagapersada.github.io/Karakter-Sholat/'},
+{id:'tenang',title:'Pintu Ketenangan',cat:'Ketenangan',desc:'Bagi yang sedang gelisah dan lelah. Pintu menuju hati yang tenang.',cover:'linear-gradient(135deg,#2A5A8A,#072E22)',icon:'☁️',link:'https://nagapersada.github.io/Pintu-Ketenangan/'},
+{id:'qolbu',title:'Cermin Qolbu',cat:'Qolbu',desc:'Bercermin melihat isi qolbu. Apa yang tersimpan di hati tercermin pada lisan dan perbuatan.',cover:'linear-gradient(135deg,#8A2A4A,#072E22)',icon:'♥',link:'https://nagapersada.github.io/Cermin-Qolbu/'},
+];
+let currentCat='Semua';
+function renderBooks(){
+const q=(document.getElementById('searchInput').value||'').toLowerCase();
+const grid=document.getElementById('bookGrid');if(!grid) return;
+const f=books.filter(b=>(currentCat==='Semua'||b.cat===currentCat)&&(b.title.toLowerCase().includes(q)||b.desc.toLowerCase().includes(q)));
+if(f.length===0){grid.innerHTML='<p style="grid-column:1/-1;text-align:center;color:#6B7D74;padding:20px">Tidak ada kajian yang ditemukan.</p>';return}
+grid.innerHTML=f.map((b,i)=>`<div class="card"><div class="cover" style="background:${b.cover}"><div class="cover-top"><span class="badge">${b.cat.toUpperCase()}</span><span>NASKAH ${String(i+1).padStart(2,'0')}</span></div><div class="cover-mid"><div style="font-size:22px">${b.icon}</div><h4>${b.title}</h4><p>DEKA SONJAYA</p></div><div class="cover-bot"><span>AKSES GRATIS</span><span>★ 5.0</span></div></div><div class="card-body"><h5>${b.title}</h5><p>${b.desc}</p><div class="btn-row"><button class="btn btn-p" onclick="openBook('${b.id}')">Buka →</button><button class="btn btn-g" onclick="shareBook('${b.id}')">Bagikan</button></div></div></div>`).join('');
+}
+function setCat(el,cat){document.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));el.classList.add('active');currentCat=cat;renderBooks()}
+function openBook(id){const b=books.find(x=>x.id===id);if(b&&b.link) window.open(b.link,'_blank')}
+function shareBook(id){const b=books.find(x=>x.id===id);const t='Warisan Ilmu - '+b.title+' oleh Deka Sonjaya. Baca gratis: '+b.link;if(navigator.share) navigator.share({title:b.title,text:t,url:b.link});else{navigator.clipboard.writeText(t);showToast('Tautan disalin')}}
+function shareAll(){const t='WARISAN ILMU - Perpustakaan Digital Kajian Deka Sonjaya\n\n14 naskah kajian dalam satu tempat:\n• Kitab Satu sampai Kitab Lima\n• Hakekat Alhamdu, Al-Quran Qadim, Mengenal Hakekat\n• 9 Hukum Rezeki, Literasi Refleksi, ESQWay\n• Karakter Sholat, Pintu Ketenangan, Cermin Qolbu\n\nAkses gratis: https://nagapersada.github.io/Warisan-Ilmu/';if(navigator.share) navigator.share({title:'Warisan Ilmu',text:t});else{navigator.clipboard.writeText(t);showToast('Tautan disalin')}}
+function showToast(m){const t=document.getElementById('toast');t.textContent=m;t.style.display='block';clearTimeout(t._h);t._h=setTimeout(()=>t.style.display='none',2200)}
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.getRegistrations().then(function(regs){
+    regs.forEach(function(r){ r.unregister(); });
+  });
+  if (window.caches) { caches.keys().then(function(keys){ keys.forEach(function(k){ caches.delete(k); }); }); }
+}
+</script>
+</body>
+</html>
