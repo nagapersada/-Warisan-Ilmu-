@@ -1,34 +1,15 @@
 {
-  "name": "Warisan Ilmu - Perpustakaan Digital Kajian Deka Sonjaya",
+  "name": "Warisan Ilmu",
   "short_name": "Warisan Ilmu",
-  "description": "Perpustakaan Digital Kajian Deka Sonjaya. 14 naskah kajian terkurasi dalam satu tempat.",
-  "id": "./index.html",
-  "start_url": "./index.html",
-  "scope": "./",
+  "start_url": ".",
   "display": "standalone",
-  "orientation": "portrait",
   "background_color": "#072E22",
   "theme_color": "#072E22",
-  "lang": "id",
-  "categories": ["education", "books", "lifestyle"],
   "icons": [
     {
       "src": "logo.png",
       "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "logo.png",
-      "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "logo.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "maskable"
+      "type": "image/png"
     }
   ]
 }
